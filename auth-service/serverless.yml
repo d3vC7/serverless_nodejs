@@ -1,0 +1,55 @@
+org: micasadesdeelei
+service: auth-service
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  environment:
+    CLIENT_ID: ${ssm:/CLIENT_ID}
+    REGION: us-east-1
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:PutItem
+      Resource: 
+       - arn:aws:dynamodb:us-east-1:652744875365:table/Users
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users # name of the table where users will be stored
+        BillingMode: PAY_PER_REQUEST #automatically scales read/write capacity base on usage
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S # s means string
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH # indicats its a partition key
+
+functions:
+  signUp:
+    handler: handlers/signUp.signUp
+    events:
+      - httpApi:
+          path: /sign-up
+          method: post
+  confirmSignUp:
+    handler: handlers/confirmSignUp.confirmSignUp
+    events:
+      - httpApi:
+          path: /config-sign-up
+          method: post
+  signIn:
+    handler: handlers/signIn.signIn
+    events:
+      - httpApi:
+          path: /sign-in
+          method: post
+  signOut:
+    handler: handlers/signOut.signOut
+    events:
+      - httpApi:
+          path: /sign-out
+          method: post
