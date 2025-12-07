@@ -1,0 +1,21 @@
+service: bannerService
+org: micasadeelei
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+resources:
+  Resources: 
+    BannerImagesBucket: 
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: banner-images-ads-daniel-famous-dev
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get

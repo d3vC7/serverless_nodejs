@@ -1,0 +1,25 @@
+service: bannerService
+org: micasadeelei
+
+provider:
+  name: aws
+  runtime: nodejs22.x
+  environment:
+    BUCKET_NAME: banner-images-ads-daniel-famous-dev
+    region: us-east-1
+
+
+resources:
+  Resources: 
+    BannerImagesBucket: 
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: banner-images-ads-daniel-famous-dev
+
+functions:
+  api:
+    handler: handlers/uploadBanner.getUploadUrl
+    events:
+      - httpApi:
+          path: /upload-banner
+          method: post

@@ -1,0 +1,18 @@
+service: bannerService
+org: micasadeelei
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+resources:
+  Resources: 
+    BannerImagesBucket
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get

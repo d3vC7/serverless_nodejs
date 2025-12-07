@@ -2,21 +2,13 @@
 org: micasaelei
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: bannerService
-configValidationMode: error
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs22.x
   environment:
     REGION: us-east-1
     BUCKET_NAME: banner-images-ads-daniel-famous-dev
-  iam:
-    role:
-      statements:
-      - Effect: 'Allow'
-        Action:
-          -  s3:PutObject
-        Resource: arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
 
 resources:
   Resources:

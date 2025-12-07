@@ -13,10 +13,10 @@ provider:
   iam:
     role:
       statements:
-      - Effect: 'Allow'
-        Action:
-          -  s3:PutObject
-        Resource: arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
+    - Effect: 'Allow'
+      Action:
+        -  s3:PutObject
+      Resource: arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
 
 resources:
   Resources:
