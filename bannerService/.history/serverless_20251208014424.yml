@@ -16,7 +16,11 @@ provider:
       - Effect: 'Allow'
         Action:
           - s3:PutObject
-        Resource: arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
+          - s3:GetObject
+          - s3:ListBucket
+        Resource: 
+          - arn:aws:s3:::banner-images-ads-daniel-famous-dev
+          - arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
       - Effect: 'Allow'
         Action:
           -  dynamodb:PutItem
@@ -52,4 +56,4 @@ functions:
       -  s3:
            bucket: banner-images-ads-daniel-famous-dev
            event: s3:ObjectCreated:Put
-           existing: true
+           existing: false

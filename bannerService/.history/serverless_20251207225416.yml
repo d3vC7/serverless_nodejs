@@ -1,7 +1,8 @@
 # "org" ensures this Service is used with the correct Serverless Framework Access Key.
-org: micasadesdeelei
+org: micasaelei
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: bannerService
+configValidationMode: error
 
 provider:
   name: aws
@@ -15,30 +16,27 @@ provider:
       statements:
       - Effect: 'Allow'
         Action:
-          - s3:PutObject
+          -  s3:PutObject
         Resource: arn:aws:s3:::banner-images-ads-daniel-famous-dev/*
-      - Effect: 'Allow'
-        Action:
-          -  dynamodb:PutItem
-        Resource: arn:aws:dynamodb:us-east-1:652744875365:table/Banners
+
 resources:
   Resources:
     BannerImagesBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: banner-images-ads-daniel-famous-dev
-    BannersTable:
+    BannerTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: Banners
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           -  AttributeName: fileName
-             AttributeType: S 
+             AttributeType: S
         KeySchema:
           -  AttributeName: fileName
              KeyType: HASH   
-   
+
 functions:
   uploadBanner:
     handler: handlers/uploadBanner.getUploadUrl
@@ -53,3 +51,4 @@ functions:
            bucket: banner-images-ads-daniel-famous-dev
            event: s3:ObjectCreated:Put
            existing: true
+           forceDeploy: true
